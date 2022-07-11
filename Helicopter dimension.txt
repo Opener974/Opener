@@ -1,0 +1,238 @@
+@name Helicopter dimension
+
+@inputs [RotorMast1 RotorMast2]:entity
+
+@model models/sprops/rectangles/size_2/rect_12x12x3.mdl
+@persist I
+
+
+
+# (Length, Width, Height) # Meter
+Size = vec(37.0, 4.4, 12.5)
+
+# Hologram
+Display_Type = 1 # 1-2
+Thickness = 0.5
+Color = vec4(200, 0, 0, 255)
+
+
+
+
+# (Diameter of rotor) # Meter
+Diameter1 = 35.00
+Diameter2 = 35.00
+
+Offset_Z1 = 55
+Offset_Z2 = 55
+
+RotorMDL = "hq_cylinder"
+RotorColor = vec4(95, 95, 255, 50)
+
+
+
+
+
+
+
+
+
+if(first() | dupefinished() | inputClk())
+{
+    entity():setMaterial("phoenix_storms/pack2/glass")
+    entity():setAlpha(1)
+
+    I = 0
+
+    I++
+    holoCreate(I)
+    holoParent(I, entity())
+    holoDisableShading(I, 1)
+    holoModel(I, "models/sprops/rectangles/size_2/rect_12x12x3.mdl")
+
+    # Player
+    K1 = 174 / 77.937881469727
+    #K1 = 2.5913
+    #print(K1)
+
+    switch(Display_Type)
+    {
+        case 1,
+        Offset = vec(0.0, -0.5, 0)
+        break
+        
+        case 2, 
+        Offset = vec(-0.5, -0.5, 0)
+        break
+    }
+
+    #Sk = (Size * 100) / K1
+    Sk = (Size * 100) / 2.54
+    SkA = (Diameter1 * 100) / 2.54
+    SkB = (Diameter2 * 100) / 2.54
+
+    I++
+    holoCreate(I, entity():toWorld(Sk * Offset))
+    holoModel(I, "models/player/kleiner.mdl")
+    holoAng(I, entity():toWorld(ang(0, -90, 0)))
+    holoParent(I, entity())
+    
+    
+    
+    #ifdef holoAnim(number, number)
+    
+    holoAnim(I, 12)
+    
+    #endif
+    
+    
+    
+    #print(holoEntity():boxSize():z())
+    
+    
+    
+    Space = "
+"
+
+    setName("Helicopter dimension" + Space + Space
+    + "Length: " + Size:x() + "m" + Space
+    + "Width: " + Size:y() + "m" + Space
+    + "Height: " + Size:z() + "m" + Space
+    + Space
+    + "Diameter of Rotor1: " + Diameter1 + "m" + Space
+    + "Diameter of Rotor2: " + Diameter2 + "m"
+    )
+
+    for(N = 1, 3)
+    {
+        switch(N)
+        {
+            case 1,
+            V = vec(0.5, 0, 0)
+            break
+
+            case 2,
+            V = vec(0, 0.5, 0)
+            break
+
+            case 3,
+            V = vec(0, 0, 0.5)
+            break
+        }
+
+        I++
+        holoCreate(I)
+        holoColor(I, Color)
+        holoScaleUnits(I, Sk * vec(clamp(!(N - 1), Thickness / Sk:x(), 1), clamp(!(N - 2), Thickness / Sk:y(), 1), clamp(!(N - 3), Thickness / Sk:z(), 1)))
+        holoPos(I, entity():toWorld(Sk * (V + Offset)))
+        holoParent(I, entity())
+        holoDisableShading(I, 1)
+    }
+
+    for(N = 1, 3)
+    {
+        switch(N)
+        {
+            case 1,
+            V = vec(0.5, 0, 1)
+            break
+
+            case 2,
+            V = vec(0, 0.5, 1)
+            break
+
+            case 3,
+            V = vec(0, 1, 0.5)
+            break
+        }
+
+        I++
+        holoCreate(I)
+        holoColor(I, Color)
+        holoScaleUnits(I, Sk * vec(clamp(!(N - 1), Thickness / Sk:x(), 1), clamp(!(N - 2), Thickness / Sk:y(), 1), clamp(!(N - 3), Thickness / Sk:z(), 1)))
+        holoPos(I, entity():toWorld(Sk * (V + Offset)))
+        holoParent(I, entity())
+        holoDisableShading(I, 1)
+    }
+
+    for(N = 1, 3)
+    {
+        switch(N)
+        {
+            case 1,
+            V = vec(0.5, 1, 0)
+            break
+
+            case 2,
+            V = vec(1, 0.5, 0)
+            break
+
+            case 3,
+            V = vec(1, 1, 0.5)
+            break
+        }
+
+        I++
+        holoCreate(I)
+        holoColor(I, Color)
+        holoScaleUnits(I, Sk * vec(clamp(!(N - 1), Thickness / Sk:x(), 1), clamp(!(N - 2), Thickness / Sk:y(), 1), clamp(!(N - 3), Thickness / Sk:z(), 1)))
+        holoPos(I, entity():toWorld(Sk * (V + Offset)))
+        holoParent(I, entity())
+        holoDisableShading(I, 1)
+    }
+
+    for(N = 1, 3)
+    {
+        switch(N)
+        {
+            case 1,
+            V = vec(0.5, 1, 1)
+            break
+
+            case 2,
+            V = vec(1, 0.5, 1)
+            break
+
+            case 3,
+            V = vec(1, 0, 0.5)
+            break
+        }
+
+        I++
+        holoCreate(I)
+        holoColor(I, Color)
+        holoScaleUnits(I, Sk * vec(clamp(!(N - 1), Thickness / Sk:x(), 1), clamp(!(N - 2), Thickness / Sk:y(), 1), clamp(!(N - 3), Thickness / Sk:z(), 1)))
+        holoPos(I, entity():toWorld(Sk * (V + Offset)))
+        holoParent(I, entity())
+        holoDisableShading(I, 1)
+    }
+    
+    
+    
+    
+    
+    
+    
+    I++
+        holoCreate(I)
+        holoColor(I, RotorColor)
+        holoScaleUnits(I, vec(SkA):setZ(1))
+        holoPos(I, RotorMast1:toWorld(vec(0, 0, Offset_Z1)))
+        holoAng(I, RotorMast1:toWorld(ang()))
+        holoParent(I, RotorMast1)
+        holoDisableShading(I, 1)
+        holoModel(I, RotorMDL)
+    
+    I++
+        holoCreate(I)
+        holoColor(I, RotorColor)
+        holoScaleUnits(I, vec(SkB):setZ(1))
+        holoPos(I, RotorMast2:toWorld(vec(0, 0, Offset_Z2)))
+        holoAng(I, RotorMast2:toWorld(ang()))
+        holoParent(I, RotorMast2)
+        holoDisableShading(I, 1)
+        holoModel(I, RotorMDL)
+}
+
+interval(150)
+
+holoColor(1, hsv2rgb(vec(curtime() * 175, 1, 1)))
